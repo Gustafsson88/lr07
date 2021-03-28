@@ -1,7 +1,7 @@
 // Copyright 2021 Danil Postvaykin <postvaykin01@mail.ru>
 
-#ifndef INCLUDE_HEADER_HPP_
-#define INCLUDE_HEADER_HPP_
+#ifndef INCLUDE_HTTP_SERVER_HPP_
+#define INCLUDE_HTTP_SERVER_HPP_
 
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
@@ -80,4 +80,4 @@ class HTTP_Server
   unsigned int number_js = 0;
 };
 
-#endif // INCLUDE_HEADER_HPP_
+#endif // INCLUDE_HTTP_SERVER_HPP_
