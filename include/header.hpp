@@ -18,7 +18,7 @@
 #include <string>
 
 const unsigned int time_for_sleep = 900;
-const std::string rootDirectory = "/v1/api/suggest";
+const char rootDirectory[]  = "/v1/api/suggest";
 
 namespace beast = boost::beast;
 namespace http = beast::http;
@@ -66,12 +66,12 @@ class HTTP_Server
   HTTP_Server();
   ~HTTP_Server();
   void start();
-  void create_session( tcp::socket& socket);
+  void create_session(tcp::socket& socket);
   void create_suggestion();
   std::string update_js_vec(std::string str);
   template<class Body, class Allocator, class Send>
   void handle_request(
-      http::request<Body,http::basic_fields<Allocator>>&& req,Send&& send);
+      http::request<Body, http::basic_fields<Allocator>>&& req, Send&& send);
   void fail(beast::error_code ec, char const* what);
  private:
   json JS;

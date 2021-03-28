@@ -23,7 +23,7 @@ std::string HTTP_Server::update_js_vec(std::string str)
     }
     mut.unlock();
   }
-  if (n==0)
+  if (n == 0)
     return "{\"suggestion\": []}";
   else
     return mass_suggestion.dump();
@@ -53,7 +53,7 @@ void HTTP_Server::create_suggestion()
         j_str.cost = it->at("cost").get<int>();
         vec_sug.push_back(j_str);
         number_js += 1;
-      };
+      }
       for (unsigned int i = 0; i < number_js - 2; i++) {
         for (unsigned int j = i + 1; j < number_js - 1; j++) {
           if (vec_sug[i].cost > vec_sug[j].cost) {
@@ -74,14 +74,14 @@ void HTTP_Server::start()
   std::thread{&HTTP_Server::create_suggestion, this}.detach();
   const char adr[] = "127.0.0.1";
   auto const address = boost::asio::ip::make_address(adr);
-  auto const port = static_cast<unsigned short>(std::atoi("8080"));
+  auto const port = static_cast<u_int16_t>(std::atoi("8080"));
   boost::asio::io_context ioc{1};
   tcp::acceptor acceptor{ioc, {address, port}};
   for (;;)
   {
     tcp::socket socket{ioc};
     acceptor.accept(socket);
-    std::thread{std::bind(&HTTP_Server::create_session,this,
+    std::thread{std::bind(&HTTP_Server::create_session, this,
                           std::move(socket))}.detach();
   }
 }
@@ -97,14 +97,14 @@ void HTTP_Server::create_session(tcp::socket& socket)
     // Read a request
     http::request<http::string_body> req;
     http::read(socket, buffer, req, ec);
-    if(ec == http::error::end_of_stream)
+    if (ec == http::error::end_of_stream)
       break;
-    if(ec)
+    if (ec)
       return fail(ec, "read");
 
     // Send the response
-    handle_request(std::move(req),lambda);
-    if(ec)
+    handle_request(std::move(req), lambda);
+    if (ec)
       return fail(ec, "write");
   }
   socket.shutdown(tcp::socket::shutdown_send, ec);
@@ -112,7 +112,7 @@ void HTTP_Server::create_session(tcp::socket& socket)
 
 template<class Body, class Allocator, class Send>
 void HTTP_Server::handle_request(
-    http::request<Body,http::basic_fields<Allocator>>&& req, Send&& send)
+    http::request<Body, http::basic_fields<Allocator>>&& req, Send&& send)
 {
   std::string request_post = req.body();
   int k = request_post.find(":");
@@ -132,7 +132,7 @@ void HTTP_Server::handle_request(
       };
 
 //  // Make sure we can handle the method
-  if( req.method() != http::verb::post && req.method() != http::verb::head &&
+  if (req.method() != http::verb::post && req.method() != http::verb::head &&
       req.target() == rootDirectory)
     return send(bad_request("Unknown HTTP-method"));
 
