@@ -1,4 +1,4 @@
-// Copyright 2021 Danil Postvaykin <postvaykin01@mail.ru>
+// Copyright 2021 Alexandr Guchkov <firer.a45@gmail.com>
 
 #ifndef INCLUDE_HTTP_SERVER_HPP_
 #define INCLUDE_HTTP_SERVER_HPP_
@@ -13,7 +13,6 @@
 #include <vector>
 #include <fstream>
 #include <thread>
-#include <cstdlib>
 #include <iostream>
 #include <string>
 
